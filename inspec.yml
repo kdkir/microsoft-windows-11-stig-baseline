@@ -6,7 +6,9 @@ copyright_email: saf@groups.mitre.org
 license: Apache-2.0
 summary: InSpec profile aligned to STIG Guidance for Microsoft Windows 11 Security Technical Implementation Guide
 version: 0.1.0
-inspec_version: ">=6.0"
+inspec_version: ">=5.22.80"
+supports:
+- platform-family: windows
 
 inputs:
   # SV-253264
