@@ -10,11 +10,10 @@ Run "System Information".
 Under "System Summary", if "BIOS Mode" does not display "UEFI", this is a finding.'
   desc 'fix', 'Configure UEFI firmware to run in UEFI mode, not Legacy BIOS mode.'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56709r828850_chk'
   tag severity: 'medium'
   tag gid: 'V-253256'
-  tag rid: 'SV-253256r971547_rule'
+  tag rid: 'SV-253256r1117271_rule'
   tag stig_id: 'WN11-00-000015'
   tag gtitle: 'SRG-OS-000424-GPOS-00188'
   tag fix_id: 'F-56659r828851_fix'

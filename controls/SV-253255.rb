@@ -27,11 +27,10 @@ Ensure domain-joined systems must have a TPM that is configured for use. (Versio
 The TPM must be enabled in the firmware.
 Run "tpm.msc" for configuration options in Windows.'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56708r828847_chk'
   tag severity: 'medium'
   tag gid: 'V-253255'
-  tag rid: 'SV-253255r971547_rule'
+  tag rid: 'SV-253255r1117271_rule'
   tag stig_id: 'WN11-00-000010'
   tag gtitle: 'SRG-OS-000424-GPOS-00188'
   tag fix_id: 'F-56658r828848_fix'

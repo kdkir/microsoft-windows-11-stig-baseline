@@ -34,11 +34,10 @@ Privileged Access Workstations (PAWs) dedicated to the management of Active Dire
 All Systems:
 Guests Group'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56947r829564_chk'
   tag severity: 'medium'
   tag gid: 'V-253494'
-  tag rid: 'SV-253494r958472_rule'
+  tag rid: 'SV-253494r1137691_rule'
   tag stig_id: 'WN11-UR-000085'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-56897r829565_fix'

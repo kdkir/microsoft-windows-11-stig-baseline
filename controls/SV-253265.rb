@@ -9,11 +9,10 @@ If the "File System" column does not indicate "NTFS" for each volume assigned a 
 This does not apply to system partitions such the Recovery and EFI System Partition.'
   desc 'fix', 'Format all local volumes to use NTFS.'
   impact 0.7
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56718r828877_chk'
   tag severity: 'high'
   tag gid: 'V-253265'
-  tag rid: 'SV-253265r958472_rule'
+  tag rid: 'SV-253265r1137691_rule'
   tag stig_id: 'WN11-00-000050'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-56668r828878_fix'

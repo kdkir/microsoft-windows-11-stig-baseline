@@ -42,11 +42,10 @@ Privileged Access Workstations (PAWs) dedicated to the management of Active Dire
 
 Note: "Local account" is a built-in security group used to assign user rights and permissions to all local accounts.'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56944r829555_chk'
   tag severity: 'medium'
   tag gid: 'V-253491'
-  tag rid: 'SV-253491r958472_rule'
+  tag rid: 'SV-253491r1137691_rule'
   tag stig_id: 'WN11-UR-000070'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-56894r829556_fix'

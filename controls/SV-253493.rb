@@ -27,11 +27,10 @@ Domain Systems Only:
 Enterprise Admins Group
 Domain Admins Group'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56946r829561_chk'
   tag severity: 'medium'
   tag gid: 'V-253493'
-  tag rid: 'SV-253493r958472_rule'
+  tag rid: 'SV-253493r1137691_rule'
   tag stig_id: 'WN11-UR-000080'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-56896r829562_fix'

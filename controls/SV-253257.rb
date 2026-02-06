@@ -10,11 +10,10 @@ Run "System Information".
 Under "System Summary", if "Secure Boot State" does not display "On", this is a finding.'
   desc 'fix', 'Enable Secure Boot in the system firmware.'
   impact 0.5
-  ref 'DPMS Target Microsoft Windows 11'
   tag check_id: 'C-56710r828853_chk'
   tag severity: 'medium'
   tag gid: 'V-253257'
-  tag rid: 'SV-253257r971547_rule'
+  tag rid: 'SV-253257r1117271_rule'
   tag stig_id: 'WN11-00-000020'
   tag gtitle: 'SRG-OS-000424-GPOS-00188'
   tag fix_id: 'F-56660r828854_fix'
