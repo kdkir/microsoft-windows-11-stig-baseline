@@ -42,11 +42,7 @@ Value Name: Value                                                               
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp') do
-    it { should_not exist }
-  end
-
-  describe powershell('netsh interface portproxy show all') do
-    its('stdout.strip') { should be_empty }
+  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam') do
+     its('Value') { should eq 'Deny' }
   end
 end
