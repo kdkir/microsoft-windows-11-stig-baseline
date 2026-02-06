@@ -28,7 +28,15 @@ This is NA for standalone, nondomain-joined systems.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe.one do
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+
+  if !domain_joined
+    impact 0.0
+    describe 'The system is not a member of a domain' do
+      skip 'Control is Not Applicable for standalone/Azure AD-only systems.'
+    end
+  else
+   describe.one do
     describe powershell('gpresult /R | ConvertTo-Json') do
       its('stdout.strip') { should match(/OS Configuration:\s+Member Workstation/) }
     end
@@ -37,4 +45,5 @@ This is NA for standalone, nondomain-joined systems.'
       its('DeviceClientId') { should_not be_empty }
     end
   end
+ end
 end
