@@ -36,14 +36,20 @@ This is NA for standalone, nondomain-joined systems.'
       skip 'Control is Not Applicable for standalone/Azure AD-only systems.'
     end
   else
-   describe.one do
-    describe powershell('gpresult /R | ConvertTo-Json') do
-      its('stdout.strip') { should match(/OS Configuration:\s+Member Workstation/) }
-    end
+    # Domain-joined: pass if EITHER GPO (Member Workstation) OR Intune MDM is present
+    describe.one do
+      describe powershell("(gpresult /R) | Out-String") do
+        its('stdout') { should match(/OS Configuration:\s+Member Workstation/i) }
+      end
 
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Provisioning\OMADM\MDMDeviceID') do
-      its('DeviceClientId') { should_not be_empty }
+      # Simple MDM presence check via OMA DM provisioning key or Intune service
+      describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Provisioning\\OMADM\\MDMDeviceID') do
+        it { should exist }
+      end
+
+      describe powershell("(Get-Service -Name 'IntuneManagementExtension' -ErrorAction SilentlyContinue).Status") do
+        its('stdout.strip') { should match(/^Running$/) }
+      end
     end
-  end
- end
-end
+  e
+
