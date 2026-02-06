@@ -51,5 +51,5 @@ This is NA for standalone, nondomain-joined systems.'
         its('stdout.strip') { should match(/^Running$/) }
       end
     end
-  e
-
+  end
+end
