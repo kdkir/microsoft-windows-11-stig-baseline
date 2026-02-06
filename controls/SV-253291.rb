@@ -67,4 +67,3 @@ Steps to create an Intune policy:
       end
   end
 end
-end
