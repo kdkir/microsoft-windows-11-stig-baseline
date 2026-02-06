@@ -38,14 +38,33 @@ Steps to create an Intune policy:
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
+  
+  pnp = <<~POWERSHELL
+    $bt = @(Get-PnpDevice -Class Bluetooth -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq 'OK' })
+    $bt.Count
+  POWERSHELL
+
+  bt_count = powershell(pnp).stdout.to_i
+
+  
+# 1) Treat VMware VDI as Not Applicable
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This is a VDI System; This System is N/A for Control SV-253291' do
       skip 'This is a VDI System; This System is N/A for Control SV-253291'
     end
+
+  elsif bt_count == 0
+      # No Bluetooth devices -> control is NA
+      impact 0.0
+      describe 'Bluetooth presence check' do
+        skip 'No Bluetooth devices detected; control is Not Applicable.'
+      end
   else
-    describe 'Turn off Bluetooth radios when not in use. Establish an organizational policy for the use of Bluetooth to include training of personnel' do
-      skip 'This is NA if the system does not have Bluetooth'
-    end
+      # 3) Bluetooth present 
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\current\device\Connectivity') do
+        its('AllowBluetooth') { should cmp 0 }
+      end
   end
+end
 end
