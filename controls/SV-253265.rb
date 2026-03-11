@@ -21,26 +21,9 @@ This does not apply to system partitions such the Recovery and EFI System Partit
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-  get_volumes = command("wmic logicaldisk get FileSystem | findstr /r /v '^$' |Findstr /v 'FileSystem'").stdout.strip.split("\r\n")
+  get_volumes = powershell("Get-Volume | Where-Object { $_.DriveLetter -and ($_.FileSystem -ne 'NTFS')}")
 
-  if get_volumes.empty?
-    impact 0.0
-    describe 'There are no local volumes' do
-      skip 'This control is not applicable'
-    end
-  else
-    get_volumes.each do |volume|
-      volumes = volume.strip
-      describe.one do
-        describe 'The format local volumes' do
-          subject { volumes }
-          it { should eq 'NTFS' }
-        end
-        describe 'The format local volumes' do
-          subject { volumes }
-          it { should eq 'ReFS' }
-        end
-      end
-    end
+  describe get_volumes do
+    its('stdout.strip') { should eq '' }  # PASS when null/empty output
   end
 end
