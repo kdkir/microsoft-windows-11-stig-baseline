@@ -39,9 +39,9 @@ Domain Admins Group'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     impact 0.0
     describe 'This requirement is applicable to domain-joined systems, for standalone systems this is NA' do
       skip 'This requirement is applicable to domain-joined systems, for standalone systems this is NA'

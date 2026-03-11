@@ -37,11 +37,11 @@ Value: RequireMutualAuthentication=1, RequireIntegrity=1'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
   keyvalue_netlogon = '\\\\*\\NETLOGON'
   keyvalue_sysvol = '\\\\*\\SYSVOL'
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'

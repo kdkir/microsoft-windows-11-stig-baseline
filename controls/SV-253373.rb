@@ -24,8 +24,17 @@ Value: 0'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}') do
-    it { should have_property 'NoGPOListChanges' }
-    its('NoGPOListChanges') { should cmp 0 }
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+
+  if !domain_joined
+    impact 0.0
+    describe 'The system is not a member of a domain' do
+      skip 'Control is Not Applicable for standalone/Azure AD-only systems.'
+    end
+  else
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}') do
+      it { should have_property 'NoGPOListChanges' }
+      its('NoGPOListChanges') { should cmp 0 }
+    end
   end
 end

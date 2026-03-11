@@ -30,9 +30,9 @@ This policy setting requires the installation of the SecGuide custom templates i
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'

@@ -28,9 +28,9 @@ If this needs to be corrected, configure the policy value for Computer Configura
   tag cci: ['CCI-000366', 'CCI-002418']
   tag nist: ['CM-6 b', 'SC-8']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'

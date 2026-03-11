@@ -58,20 +58,29 @@ All of the built-in accounts may not exist on a system, depending on the Windows
   write-output $select_object_wdagutacc
   EOH
 
-  describe 'Administrator built-in account needs to be disabled as part of security' do
-    subject { powershell(admin_script).strip }
-    it { should_not eq 'True' }
-  end
-  describe 'Guest built-in account needs to be disabled as part of security' do
-    subject { powershell(guest_script).strip }
-    it { should_not eq 'True' }
-  end
-  describe 'Default Account built-in account needs to be disabled as part of security' do
-    subject { powershell(default_account_script).strip }
-    it { should_not eq 'True' }
-  end
-  describe 'WDAGUtilityAccount built-in account needs to be disabled as part of security' do
-    subject { powershell(wdagutacc_script).strip }
-    it { should_not eq 'True' }
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+
+  if !domain_joined
+    impact 0.0
+    describe 'The system is not a member of a domain' do
+      skip 'Control is Not Applicable for standalone/Azure AD-only systems.'
+    end
+  else
+    describe 'Administrator built-in account needs to be disabled as part of security' do
+      subject { powershell(admin_script).strip }
+      it { should_not eq 'True' }
+    end
+    describe 'Guest built-in account needs to be disabled as part of security' do
+      subject { powershell(guest_script).strip }
+      it { should_not eq 'True' }
+    end
+    describe 'Default Account built-in account needs to be disabled as part of security' do
+      subject { powershell(default_account_script).strip }
+      it { should_not eq 'True' }
+    end
+    describe 'WDAGUtilityAccount built-in account needs to be disabled as part of security' do
+      subject { powershell(wdagutacc_script).strip }
+      it { should_not eq 'True' }
+    end
   end
 end

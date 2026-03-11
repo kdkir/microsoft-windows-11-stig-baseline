@@ -40,7 +40,7 @@ If all of the following settings exist and are populated, this is not a finding.
   tag cci: ['CCI-000765']
   tag nist: ['IA-2 (1)']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
   reader_script = <<-EOH
    (Get-Item 'Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Cryptography\\Calais\\Readers').Property.Count
@@ -50,7 +50,7 @@ If all of the following settings exist and are populated, this is not a finding.
    (Get-Item 'Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Cryptography\\Calais\\SmartCards').Property.Count
   EOH
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'

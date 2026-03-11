@@ -26,8 +26,9 @@ If "System type" is not "64-bit operating system...", this is a finding.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  is_domain = command('(gwmi win32_computersystem).partofdomain').stdout.strip == 'True'
-  if is_domain
+  domain_joined  = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+
+  if domain_joined
     describe os.arch do
       it { should eq 'x86_64' }
     end

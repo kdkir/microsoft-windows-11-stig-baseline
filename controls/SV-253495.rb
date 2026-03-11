@@ -60,9 +60,9 @@ Note: "Local account" is a built-in security group used to assign user rights an
   tag cci: ['CCI-000213', 'CCI-002314']
   tag nist: ['AC-3', 'AC-17 (1)']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
-  if is_domain == 'WORKGROUP'
+  if !domain_joined
     describe security_policy do
       its('SeDenyRemoteInteractiveLogonRight') { should eq ['S-1-5-32-546'] }
     end

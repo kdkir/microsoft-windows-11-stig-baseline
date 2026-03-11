@@ -39,14 +39,14 @@ Run "tpm.msc" for configuration options in Windows.'
   tag cci: ['CCI-000366', 'CCI-002421']
   tag nist: ['CM-6 b', 'SC-8 (1)']
 
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_joined  = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
 
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This is a VDI System; This System is N/A for Control SV-253255' do
       skip 'This is a VDI System; This System is N/A for Control SV-253255'
     end
-  elsif is_domain == 'WORKGROUP'
+  elsif !domain_joined
     impact 0.0
     describe 'This system is not joined to a domain, therefore this control is Not Applicable' do
       skip 'This system is not joined to a domain, therefore this control is Not Applicable'
