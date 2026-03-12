@@ -42,73 +42,21 @@ Inactive accounts that have been reviewed and deemed to be required must be docu
   tag cci: ['CCI-003627', 'CCI-000795', 'CCI-000172']
   tag nist: ['AC-2 (3) (a)', 'IA-4 e', 'AU-12 c']
 
-  # userList = users.where { uid !~ /S\-1\-5\-21\-\d+\-\d+\-\d+\-50[0-3]/ }
-  # PR submitted to return the last logon property via users.
-  # https://github.com/inspec/inspec/issues/4723
+  # Simplified check, Get-LocalUser
+  # Where account is enabled, and not a built-in system account
+  # Where LastLogon exists, and last logon is more than 35 days ago
 
-  users = command("Get-CimInstance -Class Win32_Useraccount -Filter 'LocalAccount=True and Disabled=False' | FT Name | Findstr /V 'Name --'").stdout.strip.split
+  users = powershell(<<~PS)
+    $threshold = (Get-Date).AddDays(-35)
+    
+    Get-LocalUser |
+      Where-Object { $_.Enabled -eq $true -and $_.SID -notlike '*-500' -and $_.SID -notlike '*-501' -and $_.SID -notlike '*-503' } |
+      Where-Object { $_.LastLogon -and $_.LastLogon -lt $threshold } |
+      Select-Object Name, SID, LastLogon
+  PS
 
-  get_sids = []
-  get_names = []
-  names = []
-  inactive_accounts = []
-
-  unless users.empty?
-    users.each do |user|
-      get_sids = command("wmic useraccount where \"Name='#{user}'\" get name',' sid| Findstr /v SID").stdout.strip
-      get_last = get_sids[get_sids.length - 3, 3]
-
-      loc_space = get_sids.index(' ')
-      names = get_sids[0, loc_space]
-      get_names.push(names) if get_last != '500' && get_last != '501' && get_last != '503'
-    end
-  end
-
-  unless get_names.empty?
-    get_names.each do |user|
-      get_last_logon = command("Net User #{user} | Findstr /i 'Last Logon' | Findstr /v 'Password script hours'").stdout.strip
-      last_logon = get_last_logon[29..33]
-      if last_logon != 'Never'
-        month = get_last_logon[28..29]
-        day = get_last_logon[31..32]
-        year = get_last_logon[34..37]
-
-        if get_last_logon[32] == '/'
-          month = get_last_logon[28..29]
-          day = get_last_logon[31]
-          year = get_last_logon[33..37]
-        end
-        date = "#{day}/#{month}/#{year}"
-
-        date_last_logged_on = DateTime.now.mjd - DateTime.parse(date).mjd
-        inactive_accounts.push(user) if date_last_logged_on > input('max_inactive_days')
-
-        unless inactive_accounts.empty?
-          describe "#{user}'s last logon" do
-            describe date_last_logged_on do
-              it { should be <= input('max_inactive_days') }
-            end
-          end
-        end
-      end
-
-      next if inactive_accounts.empty?
-
-      next unless last_logon == 'Never'
-
-      date_last_logged_on = 'Never'
-      describe "#{user}'s last logon" do
-        describe date_last_logged_on do
-          it { should_not == 'Never' }
-        end
-      end
-    end
-  end
-
-  if inactive_accounts.empty?
-    impact 0.0
-    describe 'The system does not have any inactive accounts, control is NA' do
-      skip 'The system does not have any inactive accounts, controls is NA'
-    end
+  describe users do
+    its('exit_status') { should eq 0 }
+    its('stdout.strip') { should eq '' }  # pass if no stale users
   end
 end
