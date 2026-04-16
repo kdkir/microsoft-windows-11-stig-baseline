@@ -26,11 +26,21 @@ Value: 1'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  domain_joined  = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This is a VDI System; This System is NA for Control V-63717.' do
       skip 'This is a VDI System; This System is NA for Control V-63717.'
     end
+  
+    #Per MSFT Docs, Windows Hello for Business is only availible on EntraID, Domain, or FIDO IDP credentials
+    elsif !domain_joined
+      impact 0.0
+      describe 'This system is not joined to a domain, therefore this control is Not Applicable' do
+        skip 'This system is not joined to a domain, therefore this control is Not Applicable'
+      end
+
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PassportForWork') do
       it { should have_property 'RequireSecurityDevice' }
