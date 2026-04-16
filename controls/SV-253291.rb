@@ -47,23 +47,25 @@ Steps to create an Intune policy:
   bt_count = powershell(pnp).stdout.to_i
 
   
-# 1) Treat VMware VDI as Not Applicable
+  # 1) Treat VMware VDI as Not Applicable
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This is a VDI System; This System is N/A for Control SV-253291' do
       skip 'This is a VDI System; This System is N/A for Control SV-253291'
     end
 
+  # 2) No Bluetooth devices -> control passes
   elsif bt_count == 0
-      # No Bluetooth devices -> control is NA
-      impact 0.0
-      describe 'Bluetooth presence check' do
-        skip 'No Bluetooth devices detected; control is Not Applicable.'
+    describe 'Bluetooth presence check' do
+      it 'has no Bluetooth devices present' do
+        expect(bt_count).to eq 0
       end
+    end
+  
+  # 3) Bluetooth present 
   else
-      # 3) Bluetooth present 
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\current\device\Connectivity') do
-        its('AllowBluetooth') { should cmp 0 }
-      end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\current\device\Connectivity') do
+      its('AllowBluetooth') { should cmp 0 }
+    end
   end
 end

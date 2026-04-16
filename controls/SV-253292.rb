@@ -19,11 +19,28 @@ Verify the organization has a policy to turn off Bluetooth when not in use and p
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
+  pnp = <<~POWERSHELL
+    $bt = @(Get-PnpDevice -Class Bluetooth -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq 'OK' })
+    $bt.Count
+  POWERSHELL
+
+  bt_count = powershell(pnp).stdout.to_i
+
+    # 1) Treat VMware VDI as Not Applicable
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
-    describe 'This is a VDI System; This Control is NA.' do
-      skip 'This is a VDI System; This Control is NA'
+    describe 'This is a VDI System; This System is N/A for Control SV-253291' do
+      skip 'This is a VDI System; This System is N/A for Control SV-253291'
     end
+
+  # 2) No Bluetooth devices -> control passes
+  elsif bt_count == 0
+    describe 'Bluetooth presence check' do
+      it 'has no Bluetooth devices present' do
+        expect(bt_count).to eq 0
+      end
+    end
+    
   else
     describe 'Turn off Bluetooth radios when not in use. Establish an organizational policy for the use of Bluetooth to include training of personnel' do
       skip 'This is NA if the system does not have Bluetooth'
