@@ -26,7 +26,17 @@ Value: 1'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  domain_joined  = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+  
+  join_type = inspec.powershell(<<~EOH).stdout.strip
+    $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null
+    $azure = ($dsreg | Select-String -Pattern '^\\s*AzureAdJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+    $domain = ($dsreg | Select-String -Pattern '^\\s*DomainJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+
+    if ($azure -eq 'YES' -and $domain -eq 'YES') { 'Hybrid' }
+    elseif ($azure -eq 'YES') { 'AzureAD' }
+    elseif ($domain -eq 'YES') { 'Domain' }
+    else { 'None' }
+    EOH
 
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
@@ -34,12 +44,12 @@ Value: 1'
       skip 'This is a VDI System; This System is NA for Control V-63717.'
     end
   
-    #Per MSFT Docs, Windows Hello for Business is only availible on EntraID, Domain, or FIDO IDP credentials
-    elsif !domain_joined
-      impact 0.0
-      describe 'This system is not joined to a domain, therefore this control is Not Applicable' do
-        skip 'This system is not joined to a domain, therefore this control is Not Applicable'
-      end
+  #Per MSFT Docs, Windows Hello for Business is only availible on EntraID, Domain, or FIDO IDP credentials
+  elsif join_type == 'None'
+    impact 0.0
+    describe 'This system is not joined to EntraID or a domain, therefore this control is Not Applicable' do
+      skip 'This system is not joined to EntraID or a domain, therefore this control is Not Applicable'
+    end
 
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PassportForWork') do

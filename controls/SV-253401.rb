@@ -24,13 +24,22 @@ Value: 6 (or greater)'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  domain_joined  = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
+  join_type = inspec.powershell(<<~EOH).stdout.strip
+    $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null
+    $azure = ($dsreg | Select-String -Pattern '^\\s*AzureAdJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+    $domain = ($dsreg | Select-String -Pattern '^\\s*DomainJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+
+    if ($azure -eq 'YES' -and $domain -eq 'YES') { 'Hybrid' }
+    elseif ($azure -eq 'YES') { 'AzureAD' }
+    elseif ($domain -eq 'YES') { 'Domain' }
+    else { 'None' }
+    EOH
 
   #Per MSFT Docs, Windows Hello for Business is only availible on EntraID, Domain, or FIDO IDP credentials
-  if !domain_joined
+  if join_type == 'None'
     impact 0.0
-    describe 'This system is not joined to a domain, therefore this control is Not Applicable' do
-      skip 'This system is not joined to a domain, therefore this control is Not Applicable'
+    describe 'This system is not joined to EntraID or a domain, therefore this control is Not Applicable' do
+      skip 'This system is not joined to EntraID or a domain, therefore this control is Not Applicable'
     end
 
   else
