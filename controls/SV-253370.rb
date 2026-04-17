@@ -54,14 +54,23 @@ https://docs.microsoft.com/en-us/windows/access-protection/credential-guard/cred
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  domain_joined = inspec.powershell("(Get-CimInstance Win32_ComputerSystem).PartOfDomain").stdout.strip.casecmp('True').zero?
-  
+  join_type = inspec.powershell(<<~EOH).stdout.strip
+    $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null
+    $azure = ($dsreg | Select-String -Pattern '^\\s*AzureAdJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+    $domain = ($dsreg | Select-String -Pattern '^\\s*DomainJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
+
+    if ($azure -eq 'YES' -and $domain -eq 'YES') { 'Hybrid' }
+    elseif ($azure -eq 'YES') { 'AzureAD' }
+    elseif ($domain -eq 'YES') { 'Domain' }
+    else { 'None' }
+    EOH
+
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This is a VDI System; This System is N/A for Control SV-253370' do
       skip 'This is a VDI System; This System is N/A for Control SV-253370'
     end
-  elsif !domain_joined
+  elsif join_type == 'None'
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'
