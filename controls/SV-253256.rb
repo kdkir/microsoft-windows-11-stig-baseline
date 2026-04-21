@@ -9,7 +9,9 @@ Run "System Information".
 
 Under "System Summary", if "BIOS Mode" does not display "UEFI", this is a finding.'
   desc 'fix', 'Configure UEFI firmware to run in UEFI mode, not Legacy BIOS mode.'
+
   impact 0.5
+
   tag check_id: 'C-56709r828850_chk'
   tag severity: 'medium'
   tag gid: 'V-253256'
@@ -22,14 +24,21 @@ Under "System Summary", if "BIOS Mode" does not display "UEFI", this is a findin
   tag cci: ['CCI-000366', 'CCI-002421']
   tag nist: ['CM-6 b', 'SC-8 (1)']
 
+  boot_mode = powershell(<<~PS)
+    (Get-ComputerInfo).BiosFirmwareType
+  PS
+
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
+
     describe 'This is a VDI System; This System is N/A for Control SV-253256' do
       skip 'This is a VDI System; This System is N/A for Control SV-253256'
     end
   else
-    describe 'Configure UEFI firmware to run in UEFI mode, not Legacy BIOS mode' do
-      skip 'Configure UEFI firmware to run in UEFI mode, not Legacy BIOS mode'
+    describe 'System firmware boot mode' do
+      it 'is running in UEFI mode' do
+        expect(boot_mode.stdout.strip.downcase).to eq 'uefi'
+      end
     end
   end
 end

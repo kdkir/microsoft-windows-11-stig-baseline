@@ -23,16 +23,45 @@ Ensure "Alert me when a new Bluetooth device wants to connect" is checked.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+pnp = <<~POWERSHELL
+    $bt = @(Get-PnpDevice -Class Bluetooth -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq 'OK' })
+    $bt.Count
+  POWERSHELL
+
+  bt_count = powershell(pnp).stdout.to_i
+
+    # 1) Treat VMware VDI as Not Applicable
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
-    describe 'This is a VDI System; This System is NA for Control V-72769.' do
-      skip 'This is a VDI System; This System is NA for Control V-72769.'
+    describe 'This is a VDI System; This System is N/A for Control SV-253291' do
+      skip 'This is a VDI System; This System is N/A for Control SV-253291'
     end
+
+  # 2) No Bluetooth devices -> control passes
+  elsif bt_count == 0
+    describe 'Bluetooth presence check' do
+      it 'has no Bluetooth devices present' do
+        expect(bt_count).to eq 0
+      end
+    end
+
   else
-    describe 'Configure Bluetooth to notify users if devices attempt to connect.
-              View Bluetooth Settings. Ensure "Alert me when a new Bluetooth device
-              wants to connect" is checked' do
-      skip 'This is NA if the system does not have Bluetooth'
+    bt_notify_key = registry_key('HKEY_CURRENT_USER\\Software\\Microsoft\\BluetoothAuthenticationAgent')
+
+    describe 'Bluetooth connection request notifications (current user)' do
+      subject { bt_notify_key }
+    end
+
+    describe.one do
+      describe bt_notify_key do
+        it 'is not configured (key missing), which is treated as compliant as this is the default Windows Behavior' do
+          expect(bt_notify_key.exists?).to eq false
+        end
+      end
+
+      describe bt_notify_key do
+        its('AcceptIncomingRequests') { should cmp 1 }
+      end
     end
   end
 end
