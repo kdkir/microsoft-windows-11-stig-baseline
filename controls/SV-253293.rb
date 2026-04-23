@@ -30,11 +30,11 @@ pnp = <<~POWERSHELL
 
   bt_count = powershell(pnp).stdout.to_i
 
-    # 1) Treat VMware VDI as Not Applicable
-  if sys_info.manufacturer == 'VMware, Inc.'
+    # 1) Treat VDI as Not Applicable
+  if !virtualization.physical_system?
     impact 0.0
-    describe 'This is a VDI System; This System is N/A for Control SV-253291' do
-      skip 'This is a VDI System; This System is N/A for Control SV-253291'
+    describe 'This is a VDI System; This System is N/A for Control SV-253293' do
+      skip 'This is a VDI System; This System is N/A for Control SV-253293'
     end
 
   # 2) No Bluetooth devices -> control passes

@@ -38,12 +38,12 @@ Value: 1'
     else { 'None' }
     EOH
 
-  if sys_info.manufacturer == 'VMware, Inc.'
+  if !virtualization.physical_system?
     impact 0.0
-    describe 'This is a VDI System; This System is NA for Control V-63717.' do
-      skip 'This is a VDI System; This System is NA for Control V-63717.'
+    describe 'This is a VDI System; This System is N/A for Control SV-253400' do
+      skip 'This is a VDI System; This System is N/A for Control SV-253400'
     end
-  
+
   #Per MSFT Docs, Windows Hello for Business is only availible on EntraID, Domain, or FIDO IDP credentials
   elsif join_type == 'None'
     impact 0.0

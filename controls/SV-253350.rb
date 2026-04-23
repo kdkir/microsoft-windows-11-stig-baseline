@@ -28,10 +28,10 @@ Configure the policy value for Computer Configuration >> Administrative Template
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  if sys_info.manufacturer == 'VMware, Inc.'
+  if !virtualization.physical_system?
     impact 0.0
-    describe 'This is a VDI System; This System is NA for Control V-63545.' do
-      skip 'This is a VDI System; This System is NA for Control V-63545.'
+    describe 'This is a VDI System; This System is N/A for Control SV-253350' do
+      skip 'This is a VDI System; This System is N/A for Control SV-253350'
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization') do

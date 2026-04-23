@@ -65,7 +65,7 @@ https://docs.microsoft.com/en-us/windows/access-protection/credential-guard/cred
     else { 'None' }
     EOH
 
-  if sys_info.manufacturer == 'VMware, Inc.'
+  if !virtualization.physical_system?
     impact 0.0
     describe 'This is a VDI System; This System is N/A for Control SV-253370' do
       skip 'This is a VDI System; This System is N/A for Control SV-253370'

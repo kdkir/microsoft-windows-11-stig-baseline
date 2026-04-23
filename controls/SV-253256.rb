@@ -28,7 +28,7 @@ Under "System Summary", if "BIOS Mode" does not display "UEFI", this is a findin
     (Get-ComputerInfo).BiosFirmwareType
   PS
 
-  if sys_info.manufacturer == 'VMware, Inc.'
+  if !virtualization.physical_system?
     impact 0.0
 
     describe 'This is a VDI System; This System is N/A for Control SV-253256' do
