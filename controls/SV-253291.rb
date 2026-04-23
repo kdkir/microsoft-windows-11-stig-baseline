@@ -38,7 +38,6 @@ Steps to create an Intune policy:
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  
   pnp = <<~POWERSHELL
     $bt = @(Get-PnpDevice -Class Bluetooth -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq 'OK' })
     $bt.Count

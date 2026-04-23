@@ -26,7 +26,6 @@ Value: 1'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  
   join_type = inspec.powershell(<<~EOH).stdout.strip
     $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null
     $azure = ($dsreg | Select-String -Pattern '^\\s*AzureAdJoined\\s*:\\s*').ToString().Split(':')[-1].Trim()
