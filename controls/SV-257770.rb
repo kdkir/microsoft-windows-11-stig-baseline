@@ -21,7 +21,12 @@ If "Audit Process Creation" is not set to "Failure", this is a finding.'
   tag cci: ['CCI-002234']
   tag nist: ['AC-6 (9)']
 
-  describe audit_policy do
-    its('Process Creation') { should cmp 'Failure' }
+  describe.one do
+    describe audit_policy do
+      its('Process Creation') { should eq 'Failure' }
+    end
+    describe audit_policy do
+      its('Process Creation') { should eq 'Success and Failure' }
+    end
   end
 end
