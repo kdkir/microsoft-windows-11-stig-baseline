@@ -25,7 +25,7 @@ Value: 1'
   tag nist: ['SC-11 b', 'IA-11']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
-    it { should have_property 'EnableLUAs' }
+    it { should have_property 'EnableLUA' }
     its('EnableLUA') { should cmp 1 }
   end
 end
