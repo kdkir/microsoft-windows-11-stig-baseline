@@ -43,6 +43,6 @@ Value Name: Value                                                               
   tag nist: ['CM-7 a']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam') do
-     its('Value') { should eq 'Deny' }
+     its('Value') { should eq input('camera_approved') }
   end
 end

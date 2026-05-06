@@ -281,4 +281,9 @@ inputs:
     desc: "If Bluetooth is approved for use on the system true=1 false=0 [false]"
     type: Numeric
     value: 0
-      
+
+  #SV-253351
+  - name: camera_approved
+    desc: "If Camera use is approved for the system 'Deny' or 'Allow' [Deny]"
+    type: String
+    value: "Deny"
