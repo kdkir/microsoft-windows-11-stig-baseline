@@ -37,6 +37,6 @@ SERVICE'
   tag nist: ['AC-6 (10)']
 
   describe security_policy do
-    its('SeAuditPrivilege') { should be_in ['S-1-5-32-544', 'S-1-5-19', 'S-1-5-20', 'S-1-5-6'] }
+    its('SeImpersonatePrivilege') { should be_in ['S-1-5-32-544', 'S-1-5-19', 'S-1-5-20', 'S-1-5-6', 'S-1-5-99-216390572-1995538116-3857911515-2404958512-2623887229'] }
   end
 end
