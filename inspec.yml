@@ -287,3 +287,9 @@ inputs:
     desc: "If Camera use is approved for the system 'Deny' or 'Allow' [Deny]"
     type: String
     value: "Deny"
+
+  #SV-253338
+  - name: max_security_event_log_size
+    desc: "The minimum size for the Security Event Log in KB [5120000]"
+    type: Numeric
+    value: 5120000

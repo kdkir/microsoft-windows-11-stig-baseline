@@ -34,6 +34,6 @@ If the system is configured to send audit records directly to an audit server, t
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security') do
     it { should have_property 'MaxSize' }
-    its('MaxSize') { should be >= 1_024_000 }
+    its('MaxSize') { should be >= input('max_security_event_log_size') }
   end
 end
