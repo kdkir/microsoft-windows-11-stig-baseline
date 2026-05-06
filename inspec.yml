@@ -274,4 +274,10 @@ inputs:
       - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
       - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
       - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+
+  # SV-253291
+  - name: bluetooth_approved
+    desc: "If Bluetooth is approved for use on the system true=1 false=0 [false]"
+    type: Numeric
+    value: 0
       

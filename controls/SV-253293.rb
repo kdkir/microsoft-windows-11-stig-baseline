@@ -30,15 +30,8 @@ pnp = <<~POWERSHELL
 
   bt_count = powershell(pnp).stdout.to_i
 
-    # 1) Treat VDI as Not Applicable
-  if !virtualization.physical_system?
-    impact 0.0
-    describe 'This is a VDI System; This System is N/A for Control SV-253293' do
-      skip 'This is a VDI System; This System is N/A for Control SV-253293'
-    end
-
   # 2) No Bluetooth devices -> control passes
-  elsif bt_count == 0
+  if bt_count == 0
     describe 'Bluetooth presence check' do
       it 'has no Bluetooth devices present' do
         expect(bt_count).to eq 0
