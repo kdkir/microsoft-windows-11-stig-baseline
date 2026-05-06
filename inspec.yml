@@ -230,6 +230,7 @@ inputs:
     desc: "Default Permissions for C:\\ Folder on OS"
     type: Array
     value:
+      - S-1-15-3-65536-1888954469-739942743-1668119174-2468466756-4239452838-1296943325-355587736-700089176:(S,RD,X,RA)
       - NT AUTHORITY\Authenticated Users:(S,AD)
       - NT AUTHORITY\Authenticated Users:(OI)(CI)(IO)(M)
       - NT AUTHORITY\SYSTEM:(OI)(CI)(F)
