@@ -76,19 +76,19 @@ All of the built-in accounts may not exist on a system, depending on the Windows
     end
   else
     describe 'Administrator built-in account needs to be disabled as part of security' do
-      subject { powershell(admin_script).strip }
+      subject { powershell(admin_script).stdout.strip }
       it { should_not eq 'True' }
     end
     describe 'Guest built-in account needs to be disabled as part of security' do
-      subject { powershell(guest_script).strip }
+      subject { powershell(guest_script).stdout.strip }
       it { should_not eq 'True' }
     end
     describe 'Default Account built-in account needs to be disabled as part of security' do
-      subject { powershell(default_account_script).strip }
+      subject { powershell(default_account_script).stdout.strip }
       it { should_not eq 'True' }
     end
     describe 'WDAGUtilityAccount built-in account needs to be disabled as part of security' do
-      subject { powershell(wdagutacc_script).strip }
+      subject { powershell(wdagutacc_script).stdout.strip }
       it { should_not eq 'True' }
     end
   end
