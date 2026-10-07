@@ -1,0 +1,153 @@
+---
+name: Windows 11 STIG Scan
+
+# On every commit: lint and archive the profile, ask Azure to build a fresh
+# Windows 11 workstation, run the archived profile there with CINC Auditor,
+# and report the JSON results back here. See infra/README.md for setup.
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: windows11-scan-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write   # GitHub OIDC login to Azure
+  contents: read
+
+env:
+  RUN_ID: gh${{ github.run_id }}-${{ github.run_attempt }}
+  STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+  RUNS_CONTAINER: runs
+  # How long to wait for the workstation to report back.
+  SCAN_TIMEOUT_MINUTES: 90
+
+jobs:
+  scan:
+    name: Scan a fresh Windows 11 workstation
+    runs-on: ubuntu-latest
+    environment: windows11-scan
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install CINC Auditor
+        run: curl -fsSL https://omnitruck.cinc.sh/install.sh | sudo bash -s -- -P cinc-auditor
+
+      - name: Check the profile
+        run: cinc-auditor check .
+
+      - name: Archive the profile
+        run: |
+          mkdir -p "$RUNNER_TEMP/bundle"
+          cinc-auditor archive . --overwrite \
+            --output "$RUNNER_TEMP/bundle/profile.tar.gz" \
+           
+          tar -czf "$RUNNER_TEMP/bundle/workstation.tar.gz" -C infra/workstation .
+          cp infra/scripts/run-scan.ps1 "$RUNNER_TEMP/bundle/run-scan.ps1"
+          ls -l "$RUNNER_TEMP/bundle"
+
+      - name: Upload profile archive as a build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: profile-${{ env.RUN_ID }}
+          path: ${{ runner.temp }}/bundle/profile.tar.gz
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Upload run files to Blob Storage
+        run: |
+          az storage blob upload-batch --auth-mode login --only-show-errors \
+            --account-name "$STORAGE_ACCOUNT" \
+            --destination "$RUNS_CONTAINER" \
+            --destination-path "$RUN_ID" \
+            --source "$RUNNER_TEMP/bundle" --overwrite
+
+      - name: Create short-lived SAS links for the workstation
+        id: sas
+        run: |
+          expiry=$(date -u -d '+4 hours' '+%Y-%m-%dT%H:%MZ')
+          sas() { # $1 = blob name, $2 = permissions
+            az storage blob generate-sas --auth-mode login --as-user --full-uri \
+              --account-name "$STORAGE_ACCOUNT" --container-name "$RUNS_CONTAINER" \
+              --name "$RUN_ID/$1" --permissions "$2" --expiry "$expiry" \
+              --https-only --only-show-errors -o tsv
+          }
+          for pair in profile_url:profile.tar.gz:r script_url:run-scan.ps1:r \
+                      config_url:workstation.tar.gz:r results_url:results.json:cw \
+                      status_url:status.json:cw; do
+            IFS=: read -r key blob perms <<<"$pair"
+            url=$(sas "$blob" "$perms")
+            echo "::add-mask::$url"
+            echo "$key=$url" >> "$GITHUB_OUTPUT"
+          done
+
+      - name: Ask Azure to build the workstation and run the scan
+        env:
+          FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
+          PROFILE_URL: ${{ steps.sas.outputs.profile_url }}
+          SCRIPT_URL: ${{ steps.sas.outputs.script_url }}
+          CONFIG_URL: ${{ steps.sas.outputs.config_url }}
+          RESULTS_URL: ${{ steps.sas.outputs.results_url }}
+          STATUS_URL: ${{ steps.sas.outputs.status_url }}
+        run: |
+          jq -n --arg action apply --arg run_id "$RUN_ID" \
+            --arg profile_url "$PROFILE_URL" --arg script_url "$SCRIPT_URL" \
+            --arg config_url "$CONFIG_URL" --arg results_url "$RESULTS_URL" \
+            --arg status_url "$STATUS_URL" '$ARGS.named' \
+          | curl -fsS --retry 3 -X POST -H 'Content-Type: application/json' \
+              --data @- "$FUNCTION_URL"
+          echo
+
+      - name: Wait for the workstation to report back
+        run: |
+          deadline=$(( $(date +%s) + SCAN_TIMEOUT_MINUTES * 60 ))
+          until [ "$(az storage blob exists --auth-mode login --account-name "$STORAGE_ACCOUNT" \
+                      --container-name "$RUNS_CONTAINER" --name "$RUN_ID/status.json" \
+                      --query exists -o tsv)" = "true" ]; do
+            if [ "$(date +%s)" -ge "$deadline" ]; then
+              echo "::error::No status from the workstation after $SCAN_TIMEOUT_MINUTES minutes."
+              exit 1
+            fi
+            echo "Waiting for $RUN_ID/status.json..."
+            sleep 30
+          done
+          mkdir -p results
+          for blob in status.json results.json; do
+            az storage blob download --auth-mode login --only-show-errors \
+              --account-name "$STORAGE_ACCOUNT" --container-name "$RUNS_CONTAINER" \
+              --name "$RUN_ID/$blob" --file "results/$blob" || true
+          done
+          cat results/status.json
+
+      - name: Upload scan results as a build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cinc-results-${{ env.RUN_ID }}
+          path: results/
+          if-no-files-found: ignore
+
+      - name: Report results
+        run: infra/scripts/report-results.sh results/status.json results/results.json
+
+      - name: Tear down the workstation
+        if: always() && steps.sas.outcome == 'success'
+        env:
+          FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
+          CONFIG_URL: ${{ steps.sas.outputs.config_url }}
+        run: |
+          jq -n --arg action destroy --arg run_id "$RUN_ID" \
+            --arg config_url "$CONFIG_URL" '$ARGS.named' \
+          | curl -fsS --retry 3 -X POST -H 'Content-Type: application/json' \
+              --data @- "$FUNCTION_URL"
+          echo

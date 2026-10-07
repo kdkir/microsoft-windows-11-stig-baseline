@@ -256,6 +256,12 @@ bundle exec [inspec or cinc-auditor] exec <name of generated archive> --target w
 
 [Full exec options](https://docs.chef.io/inspec/cli/#options-3)
 
+## Continuous Integration in Azure
+
+Every commit runs the profile against a fresh Windows 11 workstation in Azure
+(GitHub Actions, Azure Functions, Logic Apps and Terraform). See
+[infra/README.md](infra/README.md) for how it works and the one-time setup.
+
 ## Using Heimdall for Viewing Test Results
 
 The JSON results output file can be loaded into **[Heimdall-Lite](https://heimdall-lite.mitre.org/)**
