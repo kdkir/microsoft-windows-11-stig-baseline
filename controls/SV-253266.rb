@@ -13,7 +13,7 @@ If the drop-down list box "Default operating system:" shows any operating system
   tag check_id: 'C-56719r828880_chk'
   tag severity: 'medium'
   tag gid: 'V-253266'
-  tag rid: 'SV-253266r991589_rule'
+  tag rid: 'SV-253266r1268251_rule'
   tag stig_id: 'WN11-00-000055'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56669r828881_fix'

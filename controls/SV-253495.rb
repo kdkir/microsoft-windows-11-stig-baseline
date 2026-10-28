@@ -51,7 +51,7 @@ Note: "Local account" is a built-in security group used to assign user rights an
   tag check_id: 'C-56948r829567_chk'
   tag severity: 'medium'
   tag gid: 'V-253495'
-  tag rid: 'SV-253495r1137691_rule'
+  tag rid: 'SV-253495r1268226_rule'
   tag stig_id: 'WN11-UR-000090'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-56898r829568_fix'

@@ -31,7 +31,7 @@ If the location of the logs has been changed, when adding Eventlog to the permis
   tag fix_id: 'F-56745r829109_fix'
   tag 'documentable'
   tag legacy: ['V-63541', 'SV-78031']
-  tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164']
+  tag cci: ['CCI-000162']
   tag nist: ['AU-9 a']
 
   get_system_root = command('Get-ChildItem Env: | Findstr SystemRoot').stdout.strip

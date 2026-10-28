@@ -26,8 +26,8 @@ Administrators'
   tag fix_id: 'F-56904r829586_fix'
   tag 'documentable'
   tag legacy: ['SV-78417', 'V-63927']
-  tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-000171', 'CCI-001914']
-  tag nist: ['AU-9 a', 'AU-12 b', 'AU-12 (3)']
+  tag cci: ['CCI-000162', 'CCI-000171']
+  tag nist: ['AU-9 a', 'AU-12 b']
 
   describe security_policy do
     its('SeSecurityPrivilege') { should eq ['S-1-5-32-544'] }

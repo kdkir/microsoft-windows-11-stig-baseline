@@ -21,8 +21,8 @@ Value: 1'
   tag fix_id: 'F-56807r829295_fix'
   tag 'documentable'
   tag legacy: ['SV-78223', 'V-63733']
-  tag cci: ['CCI-004895', 'CCI-002038']
-  tag nist: ['SC-11 b', 'IA-11']
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services') do
     it { should have_property 'fPromptForPassword' }

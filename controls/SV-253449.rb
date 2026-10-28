@@ -21,8 +21,8 @@ Value: 1'
   tag fix_id: 'F-56852r829430_fix'
   tag 'documentable'
   tag legacy: ['V-63703', 'SV-78193']
-  tag cci: ['CCI-002418', 'CCI-002421']
-  tag nist: ['SC-8', 'SC-8 (1)']
+  tag cci: ['CCI-002418']
+  tag nist: ['SC-8']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters') do
     it { should have_property 'RequireSecuritySignature' }

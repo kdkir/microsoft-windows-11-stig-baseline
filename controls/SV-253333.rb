@@ -23,8 +23,8 @@ System >> Security State Change - Success'
   tag fix_id: 'F-56736r829082_fix'
   tag 'documentable'
   tag legacy: ['V-63507', 'SV-77997']
-  tag cci: ['CCI-000172', 'CCI-002234']
-  tag nist: ['AU-12 c', 'AC-6 (9)']
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c']
 
   describe.one do
     describe audit_policy do

@@ -12,7 +12,7 @@ If the value for "Accounts: Rename guest account" is set to "Guest", this is a f
   tag check_id: 'C-56889r829390_chk'
   tag severity: 'medium'
   tag gid: 'V-253436'
-  tag rid: 'SV-253436r991589_rule'
+  tag rid: 'SV-253436r1268251_rule'
   tag stig_id: 'WN11-SO-000025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56839r829391_fix'

@@ -12,7 +12,7 @@ If the value for "Accounts: Rename administrator account" is set to "Administrat
   tag check_id: 'C-56888r829387_chk'
   tag severity: 'medium'
   tag gid: 'V-253435'
-  tag rid: 'SV-253435r991589_rule'
+  tag rid: 'SV-253435r1268251_rule'
   tag stig_id: 'WN11-SO-000020'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56838r829388_fix'

@@ -6,17 +6,23 @@ control 'SV-268317' do
 Get-AppxPackage -AllUsers | Where-Object { $_.Name -like "*Copilot*" }
 
 If Microsoft.Copilot displays, this is a finding.'
-  desc 'fix', 'Open PowerShell as an administrator. Run the following command:
+  desc 'fix', 'Open PowerShell as an administrator. Run the following commands:
 
-Get-AppxPackage -AllUsers *CoPilot* | Remove-AppxPackage -AllUsers'
+Get-AppxPackage -AllUsers *CoPilot* | Remove-AppxPackage -AllUsers
+
+Get-AppxPackage -AllUsers -Name "Microsoft.Windows.Ai.Copilot.Provider" | Remove-AppxPackage -AllUsers
+
+Get-AppxProvisionedPackage -Online | Where-Object {$_.DisplayName -like "*Copilot*"} | Remove-AppxProvisionedPackage -Online
+
+Note: Major Windows feature updates may reprovision default AppX packages. Running the PowerShell commands in a script as a post-update task or deploying it via a startup script is highly recommended for persistent environments.'
   impact 0.5
   tag check_id: 'C-72338r1135318_chk'
   tag severity: 'medium'
   tag gid: 'V-268317'
-  tag rid: 'SV-268317r1135320_rule'
+  tag rid: 'SV-268317r1260009_rule'
   tag stig_id: 'WN11-00-000125'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
-  tag fix_id: 'F-72241r1135319_fix'
+  tag fix_id: 'F-72241r1260008_fix'
   tag 'documentable'
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']

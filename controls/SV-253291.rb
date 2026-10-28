@@ -13,26 +13,26 @@ Value Name: AllowBluetooth
 Value Type: REG_DWORD
 Value: 0x00000000 (0)
 
-Approval must be documented with the ISSO.'
+Approval for Bluetooth use must be documented with the information system security officer (ISSO).'
   desc 'fix', 'Turn off Bluetooth radios not organizationally approved.
 
-For systems managed by Intune, apply the DOD Windows 11 STIG Settings Catalog (or equivalent Intune policy) found in the Intune policy package available on cyber.mil.
+For systems managed by Intune, apply the DoW Windows 11 STIG Settings Catalog (or equivalent Intune policy) found in the Intune policy package available on cyber.mil.
 Steps to create an Intune policy:
 1. Sign in to the Intune admin center >> Devices >> Configuration >> Create >> New Policy.
 2. Platform: Windows 10 and later. Profile type: Settings Catalog, then click "Create".
 3. Basics: Provide a Name and Description of the profile, then click "Next".
-4. Configuration settings: Click "+ Add settings" and search for connectivity under the Settings picker. Under the Connectivity category, check the box next to Allow Bluetooth setting. Choose the first option, "Disallow Bluetooth", then click "Next".
+4. Configuration settings: Click "+ Add settings" and search for connectivity under the Settings picker. Under the Connectivity category, check the box next to "Allow Bluetooth setting". Choose the first option, "Disallow Bluetooth", then click "Next".
 5. Scope tags: (optional), then click "Next".
 6. Assignments: Assign the policy to Entra security groups that contain the target users or devices, then click "Next".
 7. Review + create: Review the deployment summary, then click "Create".'
   impact 0.5
-  tag check_id: 'C-56744r1153420_chk'
+  tag check_id: 'C-56744r1259981_chk'
   tag severity: 'medium'
   tag gid: 'V-253291'
-  tag rid: 'SV-253291r1153422_rule'
+  tag rid: 'SV-253291r1259983_rule'
   tag stig_id: 'WN11-00-000210'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
-  tag fix_id: 'F-56694r1153421_fix'
+  tag fix_id: 'F-56694r1259982_fix'
   tag 'documentable'
   tag legacy: ['SV-87403', 'V-72765']
   tag cci: ['CCI-000381']

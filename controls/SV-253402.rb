@@ -21,8 +21,8 @@ Value: 1'
   tag fix_id: 'F-56805r829289_fix'
   tag 'documentable'
   tag legacy: ['V-63729', 'SV-78219']
-  tag cci: ['CCI-004895', 'CCI-002038']
-  tag nist: ['SC-11 b', 'IA-11']
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services') do
     it { should have_property 'DisablePasswordSaving' }

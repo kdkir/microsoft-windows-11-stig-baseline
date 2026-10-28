@@ -21,8 +21,8 @@ Value: 0x00000384 (900) (or less, excluding "0" which is effectively disabled)'
   tag fix_id: 'F-56847r829415_fix'
   tag 'documentable'
   tag legacy: ['SV-78159', 'V-63669']
-  tag cci: ['CCI-000057', 'CCI-001133', 'CCI-002361']
-  tag nist: ['AC-11 a', 'SC-10', 'AC-12']
+  tag cci: ['CCI-001133', 'CCI-002361']
+  tag nist: ['SC-10', 'AC-12']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
     it { should have_property 'InactivityTimeoutSecs' }

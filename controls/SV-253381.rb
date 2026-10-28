@@ -21,18 +21,11 @@ Value: 1'
   tag fix_id: 'F-56784r829226_fix'
   tag 'documentable'
   tag legacy: ['SV-78139', 'V-63649']
-  tag cci: ['CCI-004895', 'CCI-002038']
-  tag nist: ['SC-11 b', 'IA-11']
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11']
 
-  if vdi_workstation?
-    impact 0.0
-    describe 'This is a VDI System; This System is N/A for Control SV-253381' do
-      skip 'This is a VDI System; This System is N/A for Control SV-253381'
-    end
-  else
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51') do
-      it { should have_property 'ACSettingIndex' }
-      its('ACSettingIndex') { should cmp 1 }
-    end
+  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51') do
+    it { should have_property 'ACSettingIndex' }
+    its('ACSettingIndex') { should cmp 1 }
   end
 end

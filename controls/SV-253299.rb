@@ -18,8 +18,8 @@ If the "Reset account lockout counter after" value is less than "15" minutes, th
   tag fix_id: 'F-56702r828980_fix'
   tag 'documentable'
   tag legacy: ['V-63413', 'SV-77903']
-  tag cci: ['CCI-000044', 'CCI-002238']
-  tag nist: ['AC-7 a', 'AC-7 b']
+  tag cci: ['CCI-000044']
+  tag nist: ['AC-7 a']
 
   describe security_policy do
     its('ResetLockoutCount') { should be >= input('pass_lock_time') }

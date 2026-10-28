@@ -21,7 +21,7 @@ Value: 0'
   tag fix_id: 'F-56820r829334_fix'
   tag 'documentable'
   tag legacy: ['SV-77829', 'V-63339']
-  tag cci: ['CCI-002890', 'CCI-003123']
+  tag cci: ['CCI-002890']
   tag nist: ['MA-4 (6)']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client') do

@@ -12,7 +12,7 @@ If the value for "Network access: Allow anonymous SID/Name translation" is not s
   tag check_id: 'C-56905r829438_chk'
   tag severity: 'high'
   tag gid: 'V-253452'
-  tag rid: 'SV-253452r991589_rule'
+  tag rid: 'SV-253452r1268251_rule'
   tag stig_id: 'WN11-SO-000140'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56855r829439_fix'

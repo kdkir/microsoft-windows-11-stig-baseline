@@ -21,8 +21,8 @@ Value: 0'
   tag fix_id: 'F-56874r829496_fix'
   tag 'documentable'
   tag legacy: ['SV-78311', 'V-63821']
-  tag cci: ['CCI-004895', 'CCI-002038']
-  tag nist: ['SC-11 b', 'IA-11']
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
     it { should have_property 'ConsentPromptBehaviorUser' }

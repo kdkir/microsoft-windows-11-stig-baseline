@@ -23,8 +23,8 @@ Logon/Logoff >> Logon - Success'
   tag fix_id: 'F-56720r829034_fix'
   tag 'documentable'
   tag legacy: ['V-63467', 'SV-77957']
-  tag cci: ['CCI-000067', 'CCI-000172']
-  tag nist: ['AC-17 (1)', 'AU-12 c']
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c']
 
   describe.one do
     describe audit_policy do

@@ -23,8 +23,8 @@ Privilege Use >> Sensitive Privilege Use - Failure'
   tag fix_id: 'F-56731r829067_fix'
   tag 'documentable'
   tag legacy: ['SV-77973', 'V-63483']
-  tag cci: ['CCI-000172', 'CCI-002234']
-  tag nist: ['AU-12 c', 'AC-6 (9)']
+  tag cci: ['CCI-002234']
+  tag nist: ['AC-6 (9)']
 
   describe.one do
     describe audit_policy do

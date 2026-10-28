@@ -27,8 +27,8 @@ For hosted hypervisors other than Hyper-V, restrict access to create or run virt
   tag fix_id: 'F-56674r828896_fix'
   tag 'documentable'
   tag legacy: ['SV-77855', 'V-63365']
-  tag cci: ['CCI-000381', 'CCI-002165']
-  tag nist: ['CM-7 a', 'AC-3 (4)']
+  tag cci: ['CCI-002165']
+  tag nist: ['AC-3 (4)']
 
   hyper_v_administrator_group = command("net localgroup 'Hyper-V Administrators' | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
 

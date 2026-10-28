@@ -17,10 +17,13 @@ Value: 0x00000001 (1)
 
 If the registry value is not "1", this is a finding.'
   desc 'fix', 'Configure the following Group Policy:
+
 Computer Configuration >> Administrative Templates >> Windows Components >> Microsoft Account "block all consumer Microsoft account user authentication" to "Enabled".
 
-For systems managed by Intune, apply the DOD Windows 11 STIG Settings Catalog (or equivalent Intune policy) found in the Intune policy package available on cyber.mil.
+For systems managed by Intune, apply the DoW Windows 11 STIG Settings Catalog (or equivalent Intune policy) found in the Intune policy package available on cyber.mil.
+
 Steps to create an Intune policy:
+
 1. Sign in to the Intune admin center >> Devices >> Configuration >> Create >> New Policy.
 2. Platform: Windows 10 and later. Profile type: Settings Catalog, then click "Create".
 3. Basics: Provide a Name and Description of the profile, then click "Next".
@@ -32,10 +35,10 @@ Steps to create an Intune policy:
   tag check_id: 'C-84241r1153426_chk'
   tag severity: 'medium'
   tag gid: 'V-279688'
-  tag rid: 'SV-279688r1153564_rule'
+  tag rid: 'SV-279688r1256671_rule'
   tag stig_id: 'WN11-00-000126'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
-  tag fix_id: 'F-84146r1153427_fix'
+  tag fix_id: 'F-84146r1256670_fix'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']

@@ -21,8 +21,8 @@ Value: 1'
   tag fix_id: 'F-56854r829436_fix'
   tag 'documentable'
   tag legacy: ['SV-78209', 'V-63719']
-  tag cci: ['CCI-002418', 'CCI-002421']
-  tag nist: ['SC-8', 'SC-8 (1)']
+  tag cci: ['CCI-002418']
+  tag nist: ['SC-8']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters') do
     it { should have_property 'RequireSecuritySignature' }

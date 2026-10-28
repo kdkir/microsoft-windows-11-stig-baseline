@@ -20,7 +20,7 @@ This can be left not configured or set to "No action" on workstations with the f
   tag check_id: 'C-56901r829426_chk'
   tag severity: 'medium'
   tag gid: 'V-253448'
-  tag rid: 'SV-253448r991589_rule'
+  tag rid: 'SV-253448r1268251_rule'
   tag stig_id: 'WN11-SO-000095'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56851r829427_fix'

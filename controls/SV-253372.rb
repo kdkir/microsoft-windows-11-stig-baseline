@@ -27,7 +27,7 @@ To correct this, configure the policy value for Computer Configuration >> Admini
   tag check_id: 'C-56825r829198_chk'
   tag severity: 'medium'
   tag gid: 'V-253372'
-  tag rid: 'SV-253372r991589_rule'
+  tag rid: 'SV-253372r1268251_rule'
   tag stig_id: 'WN11-CC-000085'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56775r829199_fix'

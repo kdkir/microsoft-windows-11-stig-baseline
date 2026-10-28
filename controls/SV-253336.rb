@@ -23,8 +23,8 @@ System >> System Integrity - Success'
   tag fix_id: 'F-56739r829091_fix'
   tag 'documentable'
   tag legacy: ['SV-78007', 'V-63517']
-  tag cci: ['CCI-000172', 'CCI-002234']
-  tag nist: ['AU-12 c', 'AC-6 (9)']
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c']
 
   describe.one do
     describe audit_policy do

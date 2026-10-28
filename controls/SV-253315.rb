@@ -17,14 +17,14 @@ Logon/Logoff >> Logoff - Success'
   tag check_id: 'C-56768r829027_chk'
   tag severity: 'medium'
   tag gid: 'V-253315'
-  tag rid: 'SV-253315r958406_rule'
+  tag rid: 'SV-253315r1268219_rule'
   tag stig_id: 'WN11-AU-000065'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag fix_id: 'F-56718r829028_fix'
   tag 'documentable'
   tag legacy: ['V-63459', 'SV-77951']
-  tag cci: ['CCI-000067', 'CCI-000172']
-  tag nist: ['AC-17 (1)', 'AU-12 c']
+  tag cci: ['CCI-000067']
+  tag nist: ['AC-17 (1)']
 
   describe.one do
     describe audit_policy do

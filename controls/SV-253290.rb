@@ -14,7 +14,7 @@ If any unresolved SIDs exist and are not for currently valid accounts or groups,
   tag check_id: 'C-56743r828952_chk'
   tag severity: 'medium'
   tag gid: 'V-253290'
-  tag rid: 'SV-253290r991589_rule'
+  tag rid: 'SV-253290r1268251_rule'
   tag stig_id: 'WN11-00-000190'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56693r828953_fix'

@@ -20,8 +20,8 @@ If the site is using a password filter that requires this setting be set to "Dis
   tag fix_id: 'F-56707r828995_fix'
   tag 'documentable'
   tag legacy: ['SV-77917', 'V-63427']
-  tag cci: ['CCI-000366', 'CCI-000192', 'CCI-000193', 'CCI-000194', 'CCI-001619', 'CCI-004066']
-  tag nist: ['CM-6 b', 'IA-5 (1) (a)', 'IA-5 (1) (h)']
+  tag cci: ['CCI-004066', 'CCI-000192']
+  tag nist: ['IA-5 (1) (h)', 'IA-5 (1) (a)']
 
   describe security_policy do
     its('PasswordComplexity') { should eq input('enable_pass_complexity') }

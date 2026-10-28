@@ -22,7 +22,7 @@ To correct this, configured the policy value for Computer Configuration >> Admin
   tag check_id: 'C-56830r829213_chk'
   tag severity: 'medium'
   tag gid: 'V-253377'
-  tag rid: 'SV-253377r991589_rule'
+  tag rid: 'SV-253377r1268251_rule'
   tag stig_id: 'WN11-CC-000115'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56780r829214_fix'

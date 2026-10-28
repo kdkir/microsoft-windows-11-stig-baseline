@@ -15,7 +15,7 @@ If the group contains any standard user accounts used for performing normal user
   tag check_id: 'C-56723r828892_chk'
   tag severity: 'medium'
   tag gid: 'V-253270'
-  tag rid: 'SV-253270r991589_rule'
+  tag rid: 'SV-253270r1268251_rule'
   tag stig_id: 'WN11-00-000075'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56673r828893_fix'

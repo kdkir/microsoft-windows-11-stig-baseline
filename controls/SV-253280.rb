@@ -13,7 +13,7 @@ Note: This does not apply to server-based applications that have a requirement f
   tag check_id: 'C-56733r828922_chk'
   tag severity: 'medium'
   tag gid: 'V-253280'
-  tag rid: 'SV-253280r991589_rule'
+  tag rid: 'SV-253280r1268251_rule'
   tag stig_id: 'WN11-00-000130'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56683r828923_fix'

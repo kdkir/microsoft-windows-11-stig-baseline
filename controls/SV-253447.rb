@@ -23,7 +23,7 @@ This setting only applies to domain-joined systems, however, it is configured by
   tag check_id: 'C-56900r829423_chk'
   tag severity: 'low'
   tag gid: 'V-253447'
-  tag rid: 'SV-253447r991589_rule'
+  tag rid: 'SV-253447r1268251_rule'
   tag stig_id: 'WN11-SO-000085'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56850r829424_fix'

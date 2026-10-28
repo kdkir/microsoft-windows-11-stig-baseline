@@ -28,15 +28,8 @@ This policy setting requires the installation of the SecGuide custom templates i
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
 
-  if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-    impact 0.0
-    describe 'This is applicable to Windows 10 prior to v1709.' do
-      skip 'This is applicable to Windows 10 prior to v1709.'
-    end
-  else
-    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel') do
-      it { should have_property 'DisableExceptionChainValidation' }
-      its('DisableExceptionChainValidation') { should cmp 0 }
-    end
+  describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel') do
+    it { should have_property 'DisableExceptionChainValidation' }
+    its('DisableExceptionChainValidation') { should cmp 0 }
   end
 end

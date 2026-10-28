@@ -19,7 +19,7 @@ Configure the policy value for Computer Configuration >> Windows Settings >> Sec
   tag check_id: 'C-56895r829408_chk'
   tag severity: 'low'
   tag gid: 'V-253442'
-  tag rid: 'SV-253442r991589_rule'
+  tag rid: 'SV-253442r1268251_rule'
   tag stig_id: 'WN11-SO-000055'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56845r829409_fix'

@@ -23,8 +23,8 @@ System >> Security System Extension - Success'
   tag fix_id: 'F-56737r829085_fix'
   tag 'documentable'
   tag legacy: ['SV-78003', 'V-63513']
-  tag cci: ['CCI-000172', 'CCI-002234']
-  tag nist: ['AU-12 c', 'AC-6 (9)']
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c']
 
   describe.one do
     describe audit_policy do

@@ -19,14 +19,14 @@ If this needs to be corrected, configure the policy value for Computer Configura
   tag check_id: 'C-56817r890453_chk'
   tag severity: 'medium'
   tag gid: 'V-253364'
-  tag rid: 'SV-253364r958358_rule'
+  tag rid: 'SV-253364r1268254_rule'
   tag stig_id: 'WN11-CC-000055'
   tag gtitle: 'SRG-OS-000481-GPOS-00481'
   tag fix_id: 'F-56767r890454_fix'
   tag 'documentable'
   tag legacy: ['SV-78071', 'V-63581']
-  tag cci: ['CCI-000366', 'CCI-002418']
-  tag nist: ['CM-6 b', 'SC-8']
+  tag cci: ['CCI-002418']
+  tag nist: ['SC-8']
 
   join_type = inspec.powershell(<<~EOH).stdout.strip
     $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null

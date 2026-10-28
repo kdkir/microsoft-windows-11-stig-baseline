@@ -23,8 +23,8 @@ Warning: This setting may prevent a system from being joined to a domain if not 
   tag fix_id: 'F-56846r829412_fix'
   tag 'documentable'
   tag legacy: ['V-63665', 'SV-78155']
-  tag cci: ['CCI-002418', 'CCI-002421']
-  tag nist: ['SC-8', 'SC-8 (1)']
+  tag cci: ['CCI-002418']
+  tag nist: ['SC-8']
 
   join_type = inspec.powershell(<<~EOH).stdout.strip
     $dsreg = & "$env:windir\\system32\\dsregcmd.exe" /status 2>$null

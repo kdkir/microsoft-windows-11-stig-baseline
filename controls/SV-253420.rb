@@ -21,8 +21,8 @@ Value: 1'
   tag fix_id: 'F-56823r829343_fix'
   tag 'documentable'
   tag legacy: ['V-63375', 'SV-77865']
-  tag cci: ['CCI-004895', 'CCI-002038']
-  tag nist: ['SC-11 b', 'IA-11']
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service') do
     it { should have_property 'DisableRunAs' }

@@ -1,15 +1,17 @@
 control 'SV-253470' do
   title 'Windows 11 must use multifactor authentication for local and network access to privileged and nonprivileged accounts.'
-  desc 'Without the use of multifactor authentication, the ease of access to privileged and nonprivileged functions is greatly increased.
+  desc 'Without the use of multifactor authentication, the ease of access to privileged and nonprivileged functions is greatly increased. 
 
-All domain accounts must be enabled for multifactor authentication with the exception of local emergency accounts.
+All domain accounts must be enabled for multifactor authentication with the exception of local emergency accounts. 
 
 Multifactor authentication requires using two or more factors to achieve authentication.
 
-Factors include:
+Factors include: 
 
 1) Something a user knows (e.g., password/PIN);
+
 2) Something a user has (e.g., cryptographic identification device, token); and
+
 3) Something a user is (e.g., biometric).
 
 A privileged account is defined as an information system account with authorizations of a privileged user.
@@ -18,7 +20,7 @@ Network access is defined as access to an information system by a user (or a pro
 
 Local access is defined as access to an organizational information system by a user (or process acting on behalf of a user) communicating through a direct connection without the use of a network.
 
-The DoD CAC with DoD-approved PKI is an example of multifactor authentication.'
+The DoW CAC with DoW-approved PKI is an example of multifactor authentication.'
   desc 'check', 'If the system is not a member of a domain, this is Not Applicable.
 
 If all of the following settings exist and are populated, this is not a finding.
@@ -30,7 +32,7 @@ If all of the following settings exist and are populated, this is not a finding.
   tag check_id: 'C-56923r1106509_chk'
   tag severity: 'medium'
   tag gid: 'V-253470'
-  tag rid: 'SV-253470r1106510_rule'
+  tag rid: 'SV-253470r1268228_rule'
   tag stig_id: 'WN11-SO-000251'
   tag gtitle: 'SRG-OS-000105-GPOS-00052'
   tag fix_id: 'F-56873r890469_fix'

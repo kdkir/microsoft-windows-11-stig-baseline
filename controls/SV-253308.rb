@@ -23,8 +23,8 @@ Account Management >> Security Group Management - Success'
   tag fix_id: 'F-56711r829007_fix'
   tag 'documentable'
   tag legacy: ['SV-77935', 'V-63445']
-  tag cci: ['CCI-000018', 'CCI-000172', 'CCI-001403', 'CCI-001404', 'CCI-001405', 'CCI-002130', 'CCI-002234', 'CCI-001914']
-  tag nist: ['AC-2 (4)', 'AU-12 c', 'AC-6 (9)', 'AU-12 (3)']
+  tag cci: ['CCI-001914']
+  tag nist: ['AU-12 (3)']
 
   describe.one do
     describe audit_policy do

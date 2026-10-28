@@ -15,7 +15,7 @@ Value: 0x00000000 (0)'
   tag check_id: 'C-56813r829162_chk'
   tag severity: 'medium'
   tag gid: 'V-253360'
-  tag rid: 'SV-253360r991589_rule'
+  tag rid: 'SV-253360r1268251_rule'
   tag stig_id: 'WN11-CC-000040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-56763r829163_fix'
@@ -24,15 +24,8 @@ Value: 0x00000000 (0)'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId == '1507'
-    impact 0.0
-    describe 'This setting requires v1507 does not include this setting; it is NA for version.' do
-      skip 'This setting requires v1507 does not include this setting; it is NA for version.'
-    end
-  else
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation') do
-      it { should have_property 'AllowInsecureGuestAuth' }
-      its('AllowInsecureGuestAuth') { should cmp 0 }
-    end
+  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation') do
+    it { should have_property 'AllowInsecureGuestAuth' }
+    its('AllowInsecureGuestAuth') { should cmp 0 }
   end
 end
